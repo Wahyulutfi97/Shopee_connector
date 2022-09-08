@@ -1,0 +1,119 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2022-08-12 14:50:56.420257",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "attribute_id",
+  "display_name",
+  "input_type",
+  "combo_box",
+  "multiple_select_combo_box",
+  "drop_down",
+  "text_filed",
+  "text_filed_2",
+  "text_filed_2_attribute_unit",
+  "value_id",
+  "output",
+  "is_mandatory",
+  "attribute_unit"
+ ],
+ "fields": [
+  {
+   "fieldname": "attribute_id",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Attribute Id",
+   "read_only": 1
+  },
+  {
+   "fieldname": "display_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Display Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "input_type",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "in_list_view": 1,
+   "label": "Input Type"
+  },
+  {
+   "depends_on": "eval:doc.input_type == 'COMBO_BOX'",
+   "fieldname": "combo_box",
+   "fieldtype": "Select",
+   "label": "COMBO_BOX"
+  },
+  {
+   "depends_on": "eval:doc.input_type == 'MULTIPLE_SELECT_COMBO_BOX'",
+   "fieldname": "multiple_select_combo_box",
+   "fieldtype": "Select",
+   "label": "MULTIPLE_SELECT_COMBO_BOX"
+  },
+  {
+   "depends_on": "eval:doc.input_type == 'DROP_DOWN'",
+   "fieldname": "drop_down",
+   "fieldtype": "Select",
+   "label": "DROP_DOWN"
+  },
+  {
+   "depends_on": "eval:doc.input_type == 'TEXT_FILED'",
+   "fieldname": "text_filed",
+   "fieldtype": "Data",
+   "label": "TEXT_FILED"
+  },
+  {
+   "depends_on": "eval:doc.input_type == 'TEXT_FILED_2'",
+   "fieldname": "text_filed_2",
+   "fieldtype": "Data",
+   "label": "TEXT_FILED_2"
+  },
+  {
+   "depends_on": "eval:doc.input_type == 'TEXT_FILED_2'",
+   "fieldname": "text_filed_2_attribute_unit",
+   "fieldtype": "Select",
+   "label": "TEXT_FILED_2_ATTRIBUTE_UNIT"
+  },
+  {
+   "fieldname": "value_id",
+   "fieldtype": "Data",
+   "label": "Value Id",
+   "read_only": 1
+  },
+  {
+   "fieldname": "output",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Output",
+   "read_only": 1
+  },
+  {
+   "fieldname": "is_mandatory",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Is Mandatory",
+   "read_only": 1
+  },
+  {
+   "fieldname": "attribute_unit",
+   "fieldtype": "Data",
+   "label": "Attribute Unit",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2022-08-25 09:27:51.948899",
+ "modified_by": "Administrator",
+ "module": "Shopee Connector",
+ "name": "Attribute Shopee",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

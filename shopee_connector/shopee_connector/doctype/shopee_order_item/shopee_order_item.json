@@ -1,0 +1,89 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2022-08-18 11:57:23.201366",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "item_id",
+  "item_name",
+  "item_sku",
+  "model_id",
+  "model_name",
+  "model_sku",
+  "item_code",
+  "model_quantity_purchased",
+  "model_discounted_price",
+  "amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "item_id",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "item_id"
+  },
+  {
+   "fieldname": "item_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "item_name"
+  },
+  {
+   "fieldname": "item_sku",
+   "fieldtype": "Data",
+   "label": "item_sku"
+  },
+  {
+   "fieldname": "model_id",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "model_id"
+  },
+  {
+   "fieldname": "model_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "model_name"
+  },
+  {
+   "fieldname": "model_sku",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "model_sku"
+  },
+  {
+   "fieldname": "model_quantity_purchased",
+   "fieldtype": "Int",
+   "label": "model_quantity_purchased"
+  },
+  {
+   "fieldname": "model_discounted_price",
+   "fieldtype": "Currency",
+   "label": "model_discounted_price"
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "label": "Amount"
+  },
+  {
+   "fieldname": "item_code",
+   "fieldtype": "Link",
+   "label": "Item Code",
+   "options": "Item"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2022-08-20 11:24:24.542330",
+ "modified_by": "Administrator",
+ "module": "Shopee Connector",
+ "name": "Shopee Order Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

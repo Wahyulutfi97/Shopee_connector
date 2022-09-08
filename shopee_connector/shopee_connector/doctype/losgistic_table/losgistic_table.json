@@ -1,0 +1,45 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2022-08-16 10:07:57.756176",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "logistic_id",
+  "logistic_name",
+  "enabled"
+ ],
+ "fields": [
+  {
+   "fieldname": "logistic_id",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "logistic_id"
+  },
+  {
+   "fieldname": "logistic_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "logistic_name"
+  },
+  {
+   "default": "0",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "enabled"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2022-08-16 10:09:12.646880",
+ "modified_by": "Administrator",
+ "module": "Shopee Connector",
+ "name": "Losgistic Table",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

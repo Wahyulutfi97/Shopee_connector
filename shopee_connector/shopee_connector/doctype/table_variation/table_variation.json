@@ -1,0 +1,94 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2022-08-16 13:23:16.472232",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "model_id",
+  "variation_1",
+  "id_variation_1",
+  "variation_2",
+  "id_variation_2",
+  "item_code",
+  "bobot",
+  "stock",
+  "model_sku",
+  "is_fake"
+ ],
+ "fields": [
+  {
+   "fieldname": "model_id",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "model_id"
+  },
+  {
+   "fieldname": "stock",
+   "fieldtype": "Int",
+   "label": "stock",
+   "read_only": 1
+  },
+  {
+   "fieldname": "model_sku",
+   "fieldtype": "Data",
+   "label": "model_sku"
+  },
+  {
+   "fieldname": "item_code",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Item Code",
+   "options": "Item"
+  },
+  {
+   "fieldname": "variation_1",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Variation 1"
+  },
+  {
+   "fieldname": "variation_2",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Variation 2"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_fake",
+   "fieldtype": "Check",
+   "label": "is_fake"
+  },
+  {
+   "fieldname": "id_variation_1",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Id Variation 1"
+  },
+  {
+   "fieldname": "id_variation_2",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Id Variation 2"
+  },
+  {
+   "fieldname": "bobot",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Weight",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2022-09-07 15:28:15.339298",
+ "modified_by": "Administrator",
+ "module": "Shopee Connector",
+ "name": "Table Variation",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

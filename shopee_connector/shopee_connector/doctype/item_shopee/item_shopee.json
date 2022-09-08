@@ -1,0 +1,281 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2022-08-15 16:09:14.634160",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "shopee_setting",
+  "type",
+  "item_id",
+  "item_code",
+  "bobot",
+  "item_name",
+  "item_sku",
+  "stock",
+  "is_fake",
+  "category_parent",
+  "child_1",
+  "child_2",
+  "child_3",
+  "child_4",
+  "get_logistic",
+  "losgistic_table",
+  "item_dangerous",
+  "pre_order",
+  "days",
+  "condition",
+  "variation_section_section",
+  "name_variation_1",
+  "variation_1",
+  "name_variation_2",
+  "variation_2",
+  "get_all_variant",
+  "variation_table",
+  "specifications_section_section",
+  "update_list_brand",
+  "id_brand",
+  "brand",
+  "get_specifications",
+  "specifications",
+  "add_to_shopee"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "options": "IS-.MM.-.YYYY.-.#####"
+  },
+  {
+   "fieldname": "item_id",
+   "fieldtype": "Data",
+   "label": "item_id",
+   "read_only": 1
+  },
+  {
+   "fieldname": "item_name",
+   "fieldtype": "Data",
+   "label": "item_name"
+  },
+  {
+   "fieldname": "item_sku",
+   "fieldtype": "Data",
+   "label": "item_sku"
+  },
+  {
+   "fieldname": "category_parent",
+   "fieldtype": "Link",
+   "label": "Category Parent",
+   "options": "Category Parent"
+  },
+  {
+   "fieldname": "child_1",
+   "fieldtype": "Link",
+   "label": "Child 1",
+   "options": "Child 1"
+  },
+  {
+   "fieldname": "child_2",
+   "fieldtype": "Link",
+   "label": "Child 2",
+   "options": "Child 2"
+  },
+  {
+   "fieldname": "child_3",
+   "fieldtype": "Link",
+   "label": "Child 3",
+   "options": "Child 3"
+  },
+  {
+   "fieldname": "child_4",
+   "fieldtype": "Link",
+   "label": "Child 4",
+   "options": "Child 4"
+  },
+  {
+   "fieldname": "shopee_setting",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Shopee Setting",
+   "options": "Shopee Setting"
+  },
+  {
+   "fieldname": "losgistic_table",
+   "fieldtype": "Table",
+   "label": "Losgistic Table",
+   "options": "Losgistic Table"
+  },
+  {
+   "fieldname": "get_logistic",
+   "fieldtype": "Button",
+   "label": "Get Logistic",
+   "options": "get_logistic"
+  },
+  {
+   "default": "0",
+   "fieldname": "item_dangerous",
+   "fieldtype": "Check",
+   "label": " item_dangerous"
+  },
+  {
+   "default": "0",
+   "fieldname": "pre_order",
+   "fieldtype": "Check",
+   "label": "Pre Order"
+  },
+  {
+   "depends_on": "eval:doc.pre_order",
+   "fieldname": "days",
+   "fieldtype": "Int",
+   "label": "Days"
+  },
+  {
+   "fieldname": "condition",
+   "fieldtype": "Select",
+   "label": "condition",
+   "options": "NEW\nUSED"
+  },
+  {
+   "depends_on": "eval:doc.type == \"Template\"",
+   "fieldname": "variation_section_section",
+   "fieldtype": "Section Break",
+   "label": "Variation Section"
+  },
+  {
+   "fieldname": "variation_1",
+   "fieldtype": "Table",
+   "label": "Variation 1",
+   "options": "Variation 1"
+  },
+  {
+   "fieldname": "variation_table",
+   "fieldtype": "Table",
+   "label": "Variation Table",
+   "options": "Table Variation"
+  },
+  {
+   "fieldname": "variation_2",
+   "fieldtype": "Table",
+   "label": "Variation 2",
+   "options": "Variation 2"
+  },
+  {
+   "fieldname": "name_variation_1",
+   "fieldtype": "Link",
+   "label": "Name Variation 1",
+   "options": "Item Attribute"
+  },
+  {
+   "fieldname": "name_variation_2",
+   "fieldtype": "Link",
+   "label": "Name Variation 2",
+   "options": "Item Attribute"
+  },
+  {
+   "fieldname": "type",
+   "fieldtype": "Select",
+   "label": "Type",
+   "options": "\nProduct\nTemplate"
+  },
+  {
+   "fieldname": "item_code",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Item Code",
+   "options": "Item"
+  },
+  {
+   "fieldname": "specifications_section_section",
+   "fieldtype": "Section Break",
+   "label": "Specifications Section"
+  },
+  {
+   "fieldname": "specifications",
+   "fieldtype": "Table",
+   "label": "Specifications",
+   "options": "Attribute Shopee"
+  },
+  {
+   "fieldname": "get_specifications",
+   "fieldtype": "Button",
+   "label": "Get Specifications"
+  },
+  {
+   "depends_on": "eval:doc.type == \"Product\"",
+   "fieldname": "stock",
+   "fieldtype": "Int",
+   "label": "Stock",
+   "read_only": 1
+  },
+  {
+   "fieldname": "id_brand",
+   "fieldtype": "Link",
+   "label": "id Brand",
+   "options": "Shopee Brand List"
+  },
+  {
+   "fetch_from": "id_brand.display_brand_name",
+   "fieldname": "brand",
+   "fieldtype": "Data",
+   "label": "Brand",
+   "read_only": 1
+  },
+  {
+   "fieldname": "update_list_brand",
+   "fieldtype": "Button",
+   "hidden": 1,
+   "label": "Update List Brand",
+   "options": "update_brand_using_category_id"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_fake",
+   "fieldtype": "Check",
+   "label": "is_fake"
+  },
+  {
+   "fieldname": "add_to_shopee",
+   "fieldtype": "Button",
+   "label": "Add to Shopee",
+   "options": "test"
+  },
+  {
+   "fieldname": "get_all_variant",
+   "fieldtype": "Button",
+   "label": "Get All Variant",
+   "options": "get_all_variant"
+  },
+  {
+   "fieldname": "bobot",
+   "fieldtype": "Int",
+   "label": "Weight"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2022-09-07 11:56:21.248557",
+ "modified_by": "Administrator",
+ "module": "Shopee Connector",
+ "name": "Item Shopee",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "item_code,item_name",
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

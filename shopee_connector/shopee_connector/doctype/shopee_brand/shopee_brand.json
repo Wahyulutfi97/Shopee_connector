@@ -1,0 +1,73 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:brand_id",
+ "creation": "2022-08-15 09:38:12.662887",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "brand_id",
+  "original_brand_name",
+  "display_brand_name",
+  "document",
+  "category_id"
+ ],
+ "fields": [
+  {
+   "fieldname": "brand_id",
+   "fieldtype": "Data",
+   "label": "brand_id",
+   "unique": 1
+  },
+  {
+   "fieldname": "original_brand_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "original_brand_name"
+  },
+  {
+   "fieldname": "display_brand_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "display_brand_name"
+  },
+  {
+   "fieldname": "document",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Document",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "category_id",
+   "fieldtype": "Dynamic Link",
+   "in_list_view": 1,
+   "label": "category_id",
+   "options": "document"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2022-08-15 13:35:47.240006",
+ "modified_by": "Administrator",
+ "module": "Shopee Connector",
+ "name": "Shopee Brand",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

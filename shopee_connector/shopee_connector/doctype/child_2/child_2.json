@@ -1,0 +1,73 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:category_id",
+ "creation": "2022-08-12 14:22:11.444678",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "category_id",
+  "parent_category_id",
+  "original_category_name",
+  "display_category_name",
+  "has_children"
+ ],
+ "fields": [
+  {
+   "fieldname": "category_id",
+   "fieldtype": "Data",
+   "label": "category_id",
+   "unique": 1
+  },
+  {
+   "fieldname": "parent_category_id",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "parent_category_id",
+   "options": "Child 1"
+  },
+  {
+   "fieldname": "original_category_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "original_category_name"
+  },
+  {
+   "fieldname": "display_category_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "display_category_name"
+  },
+  {
+   "fieldname": "has_children",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "has_children"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2022-08-15 16:18:07.890898",
+ "modified_by": "Administrator",
+ "module": "Shopee Connector",
+ "name": "Child 2",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "display_category_name",
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

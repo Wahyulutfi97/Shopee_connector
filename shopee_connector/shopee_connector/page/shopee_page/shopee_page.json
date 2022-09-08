@@ -1,0 +1,22 @@
+{
+ "content": null,
+ "creation": "2022-08-24 10:29:22.452361",
+ "docstatus": 0,
+ "doctype": "Page",
+ "idx": 0,
+ "modified": "2022-08-24 10:29:22.452361",
+ "modified_by": "Administrator",
+ "module": "Shopee Connector",
+ "name": "shopee-page",
+ "owner": "Administrator",
+ "page_name": "Shopee Page",
+ "roles": [
+  {
+   "role": "All"
+  }
+ ],
+ "script": null,
+ "standard": "Yes",
+ "style": null,
+ "system_page": 0
+}

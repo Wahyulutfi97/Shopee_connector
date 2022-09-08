@@ -1,0 +1,222 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:order_sn",
+ "creation": "2022-08-18 11:30:21.073776",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "order_sn",
+  "shopee_setting",
+  "create_time",
+  "order_status",
+  "customer",
+  "shopee_order_item",
+  "section_break_5",
+  "total_orders",
+  "column_break_7",
+  "total_wight",
+  "section_break_9",
+  "shipping_carrier",
+  "recipient_name",
+  "phone",
+  "full_address",
+  "column_break_15",
+  "district",
+  "city",
+  "state",
+  "zipcode",
+  "section_break_20",
+  "estimated_shipping_fee",
+  "actual_shipping_fee",
+  "package_number",
+  "tracking_no",
+  "payment_method",
+  "total_sales",
+  "buyer_transaction_fee",
+  "total_amount",
+  "pay_time",
+  "note"
+ ],
+ "fields": [
+  {
+   "fieldname": "order_sn",
+   "fieldtype": "Data",
+   "label": "order_sn",
+   "unique": 1
+  },
+  {
+   "fieldname": "order_status",
+   "fieldtype": "Data",
+   "label": "order_status"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "shopee_order_item",
+   "fieldtype": "Table",
+   "label": "Shopee Order Item",
+   "options": "Shopee Order Item",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_wight",
+   "fieldtype": "Float",
+   "label": "Total Weight"
+  },
+  {
+   "fieldname": "shipping_carrier",
+   "fieldtype": "Data",
+   "label": "shipping_carrier"
+  },
+  {
+   "fieldname": "package_number",
+   "fieldtype": "Data",
+   "label": "package_number"
+  },
+  {
+   "fieldname": "payment_method",
+   "fieldtype": "Data",
+   "label": "payment_method"
+  },
+  {
+   "fieldname": "total_amount",
+   "fieldtype": "Currency",
+   "label": "total_amount"
+  },
+  {
+   "fieldname": "estimated_shipping_fee",
+   "fieldtype": "Currency",
+   "label": "estimated_shipping_fee"
+  },
+  {
+   "fieldname": "actual_shipping_fee",
+   "fieldtype": "Currency",
+   "label": "actual_shipping_fee"
+  },
+  {
+   "fieldname": "buyer_transaction_fee",
+   "fieldtype": "Currency",
+   "label": " Buyer Transaction Fee"
+  },
+  {
+   "fieldname": "recipient_name",
+   "fieldtype": "Data",
+   "label": "recipient_name"
+  },
+  {
+   "fieldname": "phone",
+   "fieldtype": "Data",
+   "label": "phone"
+  },
+  {
+   "fieldname": "district",
+   "fieldtype": "Data",
+   "label": "district"
+  },
+  {
+   "fieldname": "city",
+   "fieldtype": "Data",
+   "label": "city"
+  },
+  {
+   "fieldname": "state",
+   "fieldtype": "Data",
+   "label": "state"
+  },
+  {
+   "fieldname": "zipcode",
+   "fieldtype": "Data",
+   "label": "zipcode"
+  },
+  {
+   "fieldname": "full_address",
+   "fieldtype": "Small Text",
+   "label": "full_address"
+  },
+  {
+   "fieldname": "create_time",
+   "fieldtype": "Datetime",
+   "label": "create_time"
+  },
+  {
+   "fieldname": "pay_time",
+   "fieldtype": "Datetime",
+   "label": "pay_time"
+  },
+  {
+   "fieldname": "note",
+   "fieldtype": "Text Editor",
+   "label": "note"
+  },
+  {
+   "fieldname": "total_orders",
+   "fieldtype": "Currency",
+   "label": "Total Orders"
+  },
+  {
+   "fieldname": "column_break_7",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_9",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_5",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "total_sales",
+   "fieldtype": "Currency",
+   "label": "Total Sales"
+  },
+  {
+   "fieldname": "column_break_15",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_20",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "shopee_setting",
+   "fieldtype": "Link",
+   "label": "Shopee Setting",
+   "options": "Shopee Setting"
+  },
+  {
+   "fieldname": "tracking_no",
+   "fieldtype": "Data",
+   "label": "tracking_no"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2022-08-30 13:16:07.883386",
+ "modified_by": "Administrator",
+ "module": "Shopee Connector",
+ "name": "Shopee Order",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

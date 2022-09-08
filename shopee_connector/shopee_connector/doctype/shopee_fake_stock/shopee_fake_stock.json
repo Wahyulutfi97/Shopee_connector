@@ -1,0 +1,124 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2022-08-23 10:35:09.075059",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "shop",
+  "warehouse",
+  "type",
+  "item_shopee",
+  "amended_from",
+  "item_id",
+  "item_code",
+  "item_name",
+  "stock",
+  "item_shopee_variant_fake"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Series",
+   "options": "SFS-.MM.-.YYYY.-.#####",
+   "read_only": 1
+  },
+  {
+   "fieldname": "shop",
+   "fieldtype": "Link",
+   "label": "Shop",
+   "options": "Shopee Setting"
+  },
+  {
+   "fetch_from": "shop.warehouse",
+   "fieldname": "warehouse",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Warehouse",
+   "options": "Warehouse",
+   "read_only": 1
+  },
+  {
+   "fieldname": "type",
+   "fieldtype": "Select",
+   "label": "Type",
+   "options": "\nProduct\nTemplate"
+  },
+  {
+   "fieldname": "item_shopee",
+   "fieldtype": "Link",
+   "label": "Item Shopee",
+   "options": "Item Shopee"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Shopee Fake Stock",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fetch_from": "item_shopee.item_id",
+   "fieldname": "item_id",
+   "fieldtype": "Data",
+   "label": "item_id"
+  },
+  {
+   "fetch_from": "item_shopee.item_code",
+   "fieldname": "item_code",
+   "fieldtype": "Link",
+   "label": "Item Code",
+   "options": "Item"
+  },
+  {
+   "fetch_from": "item_shopee.item_name",
+   "fieldname": "item_name",
+   "fieldtype": "Data",
+   "label": "Item Name"
+  },
+  {
+   "depends_on": "eval: doc.type == \"Product\"",
+   "fieldname": "stock",
+   "fieldtype": "Int",
+   "label": "Stock"
+  },
+  {
+   "depends_on": "eval: doc.type == \"Template\"",
+   "fieldname": "item_shopee_variant_fake",
+   "fieldtype": "Table",
+   "label": "Item Shopee Variant Fake",
+   "options": "Item Shopee Variant Fake"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2022-08-23 10:56:15.288272",
+ "modified_by": "Administrator",
+ "module": "Shopee Connector",
+ "name": "Shopee Fake Stock",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

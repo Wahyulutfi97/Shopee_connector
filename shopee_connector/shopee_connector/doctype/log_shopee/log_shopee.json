@@ -1,0 +1,47 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2022-08-24 10:24:56.947352",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "data",
+  "order_detail"
+ ],
+ "fields": [
+  {
+   "fieldname": "data",
+   "fieldtype": "Text Editor",
+   "label": "Data"
+  },
+  {
+   "fieldname": "order_detail",
+   "fieldtype": "Text Editor",
+   "label": "Order Detail"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2022-08-24 11:12:47.000646",
+ "modified_by": "Administrator",
+ "module": "Shopee Connector",
+ "name": "Log Shopee",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

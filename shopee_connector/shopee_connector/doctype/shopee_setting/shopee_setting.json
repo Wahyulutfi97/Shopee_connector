@@ -1,0 +1,180 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:shop",
+ "creation": "2022-08-11 14:28:31.519744",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "enable_sync",
+  "seller_test",
+  "shop",
+  "code",
+  "shop_id",
+  "partner_id",
+  "key",
+  "gen_url",
+  "gen_auth",
+  "url",
+  "gen_token_with_code",
+  "gen_token_with_refresh_token",
+  "refresh_token",
+  "new_refresh_token",
+  "access_token",
+  "get_logistic",
+  "get_product",
+  "warehouse",
+  "price_list",
+  "ongkir_account",
+  "paid_to"
+ ],
+ "fields": [
+  {
+   "fieldname": "shop",
+   "fieldtype": "Data",
+   "label": "Shop",
+   "unique": 1
+  },
+  {
+   "fieldname": "partner_id",
+   "fieldtype": "Data",
+   "label": "Partner_id"
+  },
+  {
+   "fieldname": "key",
+   "fieldtype": "Data",
+   "label": "Key"
+  },
+  {
+   "fieldname": "code",
+   "fieldtype": "Data",
+   "label": "Code"
+  },
+  {
+   "fieldname": "shop_id",
+   "fieldtype": "Data",
+   "label": "Shop Id"
+  },
+  {
+   "fieldname": "refresh_token",
+   "fieldtype": "Data",
+   "label": "refresh_token"
+  },
+  {
+   "fieldname": "access_token",
+   "fieldtype": "Data",
+   "label": "access_token"
+  },
+  {
+   "fieldname": "gen_url",
+   "fieldtype": "Button",
+   "label": "Gen URL",
+   "options": "gen_url"
+  },
+  {
+   "fieldname": "url",
+   "fieldtype": "Small Text",
+   "hidden": 1,
+   "label": "URL",
+   "read_only": 1
+  },
+  {
+   "fieldname": "gen_token_with_refresh_token",
+   "fieldtype": "Button",
+   "label": "Gen Token With refresh_token",
+   "options": "gen_t_rt"
+  },
+  {
+   "fieldname": "gen_token_with_code",
+   "fieldtype": "Button",
+   "hidden": 1,
+   "label": "Gen Token With Code",
+   "options": "gen_t_c",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "seller_test",
+   "fieldtype": "Check",
+   "label": "Seller test"
+  },
+  {
+   "fieldname": "new_refresh_token",
+   "fieldtype": "Data",
+   "label": "new_refresh_token"
+  },
+  {
+   "default": "0",
+   "fieldname": "enable_sync",
+   "fieldtype": "Check",
+   "label": "Enable Sync"
+  },
+  {
+   "fieldname": "get_logistic",
+   "fieldtype": "Button",
+   "hidden": 1,
+   "label": "Get Logistic",
+   "options": "get_logistic",
+   "read_only": 1
+  },
+  {
+   "fieldname": "get_product",
+   "fieldtype": "Button",
+   "label": "Get Product"
+  },
+  {
+   "fieldname": "warehouse",
+   "fieldtype": "Link",
+   "label": "Warehouse",
+   "options": "Warehouse"
+  },
+  {
+   "fieldname": "price_list",
+   "fieldtype": "Link",
+   "label": "Price List",
+   "options": "Price List"
+  },
+  {
+   "fieldname": "ongkir_account",
+   "fieldtype": "Link",
+   "label": "Ongkir Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "gen_auth",
+   "fieldtype": "Button",
+   "label": "Gen Auth",
+   "options": "get_auth_code"
+  },
+  {
+   "fieldname": "paid_to",
+   "fieldtype": "Link",
+   "label": "paid_to",
+   "options": "Account"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2022-09-01 09:42:06.199627",
+ "modified_by": "Administrator",
+ "module": "Shopee Connector",
+ "name": "Shopee Setting",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
