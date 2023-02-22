@@ -30,7 +30,7 @@ class Logistic():
         }
         response = requests.request("GET",url,headers=headers, data=payload, allow_redirects=False)
         ret = json.loads(response.text)
-        frappe.msgprint(str(ret))
+        # frappe.msgprint(str(ret))
         if(ret['error']):
             frappe.throw(ret['error'])
         else:
@@ -163,6 +163,7 @@ def create_shipping_document(shop_name,order_sn,package_number):
     # shop_name = "OpenSANDBOX39454f033ed4e413af6a74fa"
     # order_sn = "220830FY182THT"
     # package_number = "OFG115548732106865"
+    tn = get_tracking_number(shop_name,order_sn,package_number)
     data = frappe.db.sql(""" SELECT * FROM `tabShopee Setting` where name='{}' """.format(shop_name),as_dict=1)
     for i in data:
         cek = i['seller_test']
@@ -188,7 +189,8 @@ def create_shipping_document(shop_name,order_sn,package_number):
             "order_list": [
                 {
                     "order_sn": order_sn,
-                    "package_number": package_number
+                    "package_number": package_number,
+                    "tracking_number": tn['response']['tracking_number']
                 }
             ],
         })

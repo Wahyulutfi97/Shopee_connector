@@ -333,7 +333,7 @@ def get_item_to_erp(name,cek,access_token,partner_id,partner_key,shop_id,item_id
 			doc.item_sku = i['item_sku']
 			if len(i['brand'])>0:
 				doc.id_brand = i['brand']['brand_id']
-				doc.brand = frappe.get_doc('Shopee Brand',i['brand']['brand_id']).display_brand_name
+				doc.brand = frappe.get_doc('Shopee Brand List',i['brand']['brand_id']).display_brand_name
 			if i['pre_order']['is_pre_order'] == True:
 				doc.pre_order = 1
 				doc.days = i['pre_order']['days_to_ship']
@@ -407,16 +407,58 @@ def get_item_to_erp(name,cek,access_token,partner_id,partner_key,shop_id,item_id
 				# frappe.msgprint(str(var)+'var')
 				# for v in var['response']:
 				if len(var['response']['tier_variation']) > 1:
+					cekItemAttribute = frappe.get_value('Item Attribute', var['response']['tier_variation'][0]['name'], 'name')
+					frappe.msgprint(str(cekItemAttribute)+" cek item Attribute var 1")
+					if(cekItemAttribute):
+						pass
+					else:
+						docia = frappe.new_doc('Item Attribute')
+						docia.attribute_name = var['response']['tier_variation'][0]['name']
+						for tv1 in var['response']['tier_variation'][0]['option_list']:						
+							row = docia.append('item_attribute_values', {})
+							row.attribute_value= tv1['option']
+							row.abbr= str(tv1['option'][:2]).upper()
+						docia.flags.ignore_permissions=True
+						docia.save()
+
 					doc.name_variation_1 = var['response']['tier_variation'][0]['name']
 					for tv1 in var['response']['tier_variation'][0]['option_list']:
 						row = doc.append('variation_1', {})
 						row.option= tv1['option']
+
+					cekItemAttribute = frappe.get_value('Item Attribute', var['response']['tier_variation'][1]['name'], 'name')
+					frappe.msgprint(str(cekItemAttribute)+" cek item Attribute var 2")
+					if(cekItemAttribute):
+						pass
+					else:
+						docia = frappe.new_doc('Item Attribute')
+						docia.attribute_name = var['response']['tier_variation'][0]['name']
+						for tv2 in var['response']['tier_variation'][1]['option_list']:						
+							row = docia.append('item_attribute_values', {})
+							row.attribute_value= tv2['option']
+							row.abbr= str(tv2['option'][:2]).upper()
+						docia.flags.ignore_permissions=True
+						docia.save()
 
 					doc.name_variation_2 = var['response']['tier_variation'][1]['name']
 					for tv2 in var['response']['tier_variation'][1]['option_list']:
 						row = doc.append('variation_2', {})
 						row.option= tv2['option']
 				else:
+					cekItemAttribute = frappe.get_value('Item Attribute', var['response']['tier_variation'][0]['name'], 'name')
+					frappe.msgprint(str(cekItemAttribute)+" cek item Attribute Else")
+					if(cekItemAttribute):
+						pass
+					else:
+						docia = frappe.new_doc('Item Attribute')
+						docia.attribute_name = var['response']['tier_variation'][0]['name']
+						for tv1 in var['response']['tier_variation'][0]['option_list']:						
+							row = docia.append('item_attribute_values', {})
+							row.attribute_value= tv1['option']
+							row.abbr= str(tv1['option'][:2]).upper()
+						docia.flags.ignore_permissions=True
+						docia.save()
+
 					doc.name_variation_1 = var['response']['tier_variation'][0]['name']
 					for tv1 in var['response']['tier_variation'][0]['option_list']:
 						row = doc.append('variation_1', {})
@@ -428,6 +470,8 @@ def get_item_to_erp(name,cek,access_token,partner_id,partner_key,shop_id,item_id
 						row.model_id = m['model_id']
 						row.variation_1 = doc.variation_1[m['tier_index'][0]].option
 						row.variation_2 = doc.variation_2[m['tier_index'][1]].option
+						row.id_variation_1 = m['tier_index'][0]
+						row.id_variation_2 = m['tier_index'][1]
 						# frappe.msgprint(doc.variation_2[m['tier_index'][1]].option+'option')
 						row.stock = m['stock_info_v2']['summary_info']['total_available_stock']
 						row.model_sku = m['model_sku']
@@ -435,6 +479,7 @@ def get_item_to_erp(name,cek,access_token,partner_id,partner_key,shop_id,item_id
 						row = doc.append('variation_table', {})
 						row.model_id = m['model_id']
 						row.variation_1 = doc.variation_1[m['tier_index'][0]].option
+						row.id_variation_1 = m['tier_index'][0]
 						row.stock = m['stock_info_v2']['summary_info']['total_available_stock']
 						row.model_sku = m['model_sku']
 			else:
@@ -459,7 +504,7 @@ def pacth_child1():
 	frappe.msgprint(str(data))
 
 @frappe.whitelist()
-def add_item_erp_to_shopee():
+def add_item_erp_to_shopee2():
 	shopee = frappe.db.sql(""" SELECT * FROM `tabShoppe Setting` WHERE seller_test = 0 LIMIT 1 """,as_dict=1)
 	cek = shopee[0].seller_test
 	access_token = shopee[0].access_token
@@ -603,3 +648,149 @@ def add_item_erp_to_shopee():
 	resp = requests.request("POST",url,headers=headers, data=payload, allow_redirects=False)
 	ret = json.loads(resp.text)
 	frappe.msprint(str(ret))
+
+# API FROM DOC item_shopee.py
+@frappe.whitelist()
+def add_item_erp_to_shopee(cek,access_token,partner_id,partner_key,shop_id,data, debug=None):
+	timest = int(time.time())
+	language = "id"
+	if int(cek) > 0:
+		host = "https://partner.test-stable.shopeemobile.com"
+	else:
+		host = "https://partner.shopeemobile.com"
+	path = "/api/v2/product/add_item"
+	redirect= "https://google.com"
+	base_string = "%s%s%s%s%s"%(partner_id, path, timest,access_token,shop_id )
+	sign = hmac.new( partner_key.encode(), base_string.encode(), hashlib.sha256).hexdigest()
+	url = str(host+path+"?access_token={}&language={}&partner_id={}&shop_id={}&sign={}&timestamp={}".format(access_token,language,partner_id,shop_id, sign,timest))
+	payload=json.dumps(data)
+
+	headers = {
+		'Content-Type': 'application/json'
+	}
+
+	resp = requests.request("POST",url,headers=headers, data=payload, allow_redirects=False)
+	ret = json.loads(resp.text)
+	# frappe.msgprint(str(url))
+	# frappe.msgprint(str(ret))
+
+	if(debug):
+		frappe.msgprint(str(payload))
+		frappe.msgprint(str(ret))
+
+	if(ret['error']!=""):
+		frappe.msgprint(str(ret['error'])+str(ret['message']))
+	else:
+		frappe.msgprint("Add product success!")
+		return ret['response']['item_id']
+
+@frappe.whitelist()
+def update_item_erp_to_shopee(cek,access_token,partner_id,partner_key,shop_id,data,debug=None):
+	timest = int(time.time())
+	language = "id"
+	if int(cek) > 0:
+		host = "https://partner.test-stable.shopeemobile.com"
+	else:
+		host = "https://partner.shopeemobile.com"
+	path = "/api/v2/product/update_item"
+	redirect= "https://google.com"
+	base_string = "%s%s%s%s%s"%(partner_id, path, timest,access_token,shop_id )
+	sign = hmac.new( partner_key.encode(), base_string.encode(), hashlib.sha256).hexdigest()
+	url = str(host+path+"?access_token={}&language={}&partner_id={}&shop_id={}&sign={}&timestamp={}".format(access_token,language,partner_id,shop_id, sign,timest))
+	payload=json.dumps(data)
+
+	resp = requests.request("POST",url, data=payload, allow_redirects=False)
+	ret = json.loads(resp.text)
+	# frappe.msgprint(str(ret)+" RESPONE UPDATE ITEM SHOPEE")
+
+	if(debug):
+		frappe.msgprint(str(payload))
+		frappe.msgprint(str(ret))
+
+	if(ret['error']!=""):
+		frappe.msgprint(str(ret['error'])+str(ret['message']))
+	else:
+		frappe.msgprint("Update product success!")
+
+@frappe.whitelist()
+def add_item_variant_erp_to_shopee(cek,access_token,partner_id,partner_key,shop_id,data,debug=None):
+	timest = int(time.time())
+	if int(cek) > 0:
+		host = "https://partner.test-stable.shopeemobile.com"
+	else:
+		host = "https://partner.shopeemobile.com"
+	path = "/api/v2/product/init_tier_variation"
+	redirect= "https://google.com"
+	base_string = "%s%s%s%s%s"%(partner_id, path, timest,access_token,shop_id )
+	sign = hmac.new( partner_key.encode(), base_string.encode(), hashlib.sha256).hexdigest()
+	# url = "https://partner.shopeemobile.com/api/v2/product/init_tier_variation?access_token=access_token&partner_id=partner_id&shop_id=shop_id&sign=sign&timestamp=timestamp"
+	url = str(host+path+"?access_token={}&partner_id={}&shop_id={}&sign={}&timestamp={}".format(access_token,partner_id,shop_id, sign,timest))
+	payload=json.dumps(data)
+
+	resp = requests.request("POST",url, data=payload, allow_redirects=False)
+	ret = json.loads(resp.text)	
+
+	if(debug):
+		frappe.msgprint(str(payload))
+		frappe.msgprint(str(ret)+ " INIT TIER VARIATION")
+
+	if(ret['error']!=""):
+		frappe.msgprint(str(ret['error'])+str(ret['message']))
+	else:
+		frappe.msgprint("Add variant success!")
+		return ret['response']['model']
+	# frappe.throw(str(ret))
+
+@frappe.whitelist()
+def update_item_variant_erp_to_shopee(cek,access_token,partner_id,partner_key,shop_id,data,debug=None):
+	timest = int(time.time())
+	if int(cek) > 0:
+		host = "https://partner.test-stable.shopeemobile.com"
+	else:
+		host = "https://partner.shopeemobile.com"
+	path = "/api/v2/product/update_tier_variation"
+	redirect= "https://google.com"
+	base_string = "%s%s%s%s%s"%(partner_id, path, timest,access_token,shop_id )
+	sign = hmac.new( partner_key.encode(), base_string.encode(), hashlib.sha256).hexdigest()
+	url = str(host+path+"?access_token={}&partner_id={}&shop_id={}&sign={}&timestamp={}".format(access_token,partner_id,shop_id, sign,timest))
+	payload=json.dumps(data)
+
+	resp = requests.request("POST",url, data=payload, allow_redirects=False)
+	ret = json.loads(resp.text)
+
+	if(debug):
+		frappe.msgprint(str(payload))
+		frappe.msgprint(str(ret)+" VARIANT RESPONSE")
+
+	if(ret['error']!=""):
+		frappe.msgprint(str(ret['error'])+str(ret['message']))
+	else:
+		frappe.msgprint("Update variant success!")
+	# frappe.msgprint(str(ret)+" VARIANT RESPONSE")
+
+@frappe.whitelist()
+def update_stock_item_api(cek,access_token,partner_id,partner_key,shop_id,data,debug=None):
+	timest = int(time.time())
+	language = "id"
+	if int(cek) > 0:
+		host = "https://partner.test-stable.shopeemobile.com"
+	else:
+		host = "https://partner.shopeemobile.com"
+	path = "/api/v2/product/update_stock"
+	redirect= "https://google.com"
+	base_string = "%s%s%s%s%s"%(partner_id, path, timest,access_token,shop_id )
+	sign = hmac.new( partner_key.encode(), base_string.encode(), hashlib.sha256).hexdigest()
+	# url = "https://partner.shopeemobile.com/api/v2/product/update_stock?access_token=access_token&partner_id=partner_id&shop_id=shop_id&sign=sign&timestamp=timestamp"
+	url = str(host+path+"?access_token={}&language={}&partner_id={}&shop_id={}&sign={}&timestamp={}".format(access_token,language,partner_id,shop_id, sign,timest))   
+	payload=json.dumps(data)
+
+	resp = requests.request("POST",url, data=payload, allow_redirects=False)
+	ret = json.loads(resp.text)
+	if(debug):
+		frappe.msgprint(str(payload))
+		frappe.msgprint(str(ret)+" UPDATE STOCK")
+
+	if(ret['error']!=""):
+		frappe.msgprint(str(ret['error'])+str(ret['message']))
+	# frappe.msgprint(str(ret)+" UPDATE STOCK")
+# END

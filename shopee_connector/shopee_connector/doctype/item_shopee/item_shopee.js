@@ -3,7 +3,76 @@
 
 frappe.ui.form.on('Item Shopee', {
 	refresh(frm) {
-		// your code here
+		cur_frm.cscript.add_variant_1 = function(doc) {
+			frappe.call({
+					method: "tokopedia_connector.tokopedia_connector.tokopedia.add_variant", 
+					args: {
+						var: cur_frm.doc.name_variation_1
+					},
+					callback: function(r) {
+						// console.log(r.message)
+						let dataField = []
+						// let value =[]
+						dataField.push({
+							label: 'Value Variant',
+							fieldname: 'value_var',
+							fieldtype: 'Select',
+							options: r.message
+						})
+	
+						let d = new frappe.ui.Dialog({
+							title: 'Value Variant',
+							fields: dataField,
+							primary_action_label: 'Submit',
+							primary_action(values) {
+								console.log(values)
+								let dataValue = values.value_var								
+								var child = cur_frm.add_child("variation_1");								
+								child.option = dataValue
+								cur_frm.refresh_field("variation_1")
+	
+								d.hide();
+							}
+						});
+						d.show();
+					}
+				})
+			},
+			cur_frm.cscript.add_variant_2 = function(doc) {
+				frappe.call({
+						method: "tokopedia_connector.tokopedia_connector.tokopedia.add_variant", 
+						args: {
+							var: cur_frm.doc.name_variation_2
+						},
+						callback: function(r) {
+							// console.log(r.message)
+							let dataField = []
+							// let value =[]
+							dataField.push({
+								label: 'Value Variant',
+								fieldname: 'value_var',
+								fieldtype: 'Select',
+								options: r.message
+							})
+		
+							let d = new frappe.ui.Dialog({
+								title: 'Value Variant',
+								fields: dataField,
+								primary_action_label: 'Submit',
+								primary_action(values) {
+									console.log(values)
+									let dataValue = values.value_var								
+									var child = cur_frm.add_child("variation_2");								
+									child.option = dataValue
+									cur_frm.refresh_field("variation_2")
+		
+									d.hide();
+								}
+							});
+							d.show();
+						}
+					})
+				}
 	},
 	onload(frm) {
 		frm.set_query("child_1", function () {
@@ -122,44 +191,44 @@ frappe.ui.form.on('Item Shopee', {
 			}
 		});
 	},
-	name_variation_1(frm) {
-		frappe.call({
-			method: "shopee_connector.get_list_for_js.get_variation_list_js",
-			args: {
-				'name': frm.doc.name_variation_1
-			},
-			callback: function (r) {
-				if (r.message) {
-					cur_frm.clear_table("variation_1");
-					for (let i = 0; i < r.message.length; i++) {
-						console.log(r.message[i]);
-						var childTable = cur_frm.add_child("variation_1");
-						childTable.option = r.message[i];
-					}
-					cur_frm.refresh_fields("variation_1");
-				}
-			}
-		});
-	},
-	name_variation_2(frm) {
-		frappe.call({
-			method: "shopee_connector.get_list_for_js.get_variation_list_js",
-			args: {
-				'name': frm.doc.name_variation_2
-			},
-			callback: function (r) {
-				if (r.message) {
-					cur_frm.clear_table("variation_2");
-					for (let i = 0; i < r.message.length; i++) {
-						console.log(r.message[i]);
-						var childTable = cur_frm.add_child("variation_2");
-						childTable.option = r.message[i];
-					}
-					cur_frm.refresh_fields("variation_2");
-				}
-			}
-		});
-	}
+	// name_variation_1(frm) {
+	// 	frappe.call({
+	// 		method: "shopee_connector.get_list_for_js.get_variation_list_js",
+	// 		args: {
+	// 			'name': frm.doc.name_variation_1
+	// 		},
+	// 		callback: function (r) {
+	// 			if (r.message) {
+	// 				cur_frm.clear_table("variation_1");
+	// 				for (let i = 0; i < r.message.length; i++) {
+	// 					console.log(r.message[i]);
+	// 					var childTable = cur_frm.add_child("variation_1");
+	// 					childTable.option = r.message[i];
+	// 				}
+	// 				cur_frm.refresh_fields("variation_1");
+	// 			}
+	// 		}
+	// 	});
+	// },
+	// name_variation_2(frm) {
+	// 	frappe.call({
+	// 		method: "shopee_connector.get_list_for_js.get_variation_list_js",
+	// 		args: {
+	// 			'name': frm.doc.name_variation_2
+	// 		},
+	// 		callback: function (r) {
+	// 			if (r.message) {
+	// 				cur_frm.clear_table("variation_2");
+	// 				for (let i = 0; i < r.message.length; i++) {
+	// 					console.log(r.message[i]);
+	// 					var childTable = cur_frm.add_child("variation_2");
+	// 					childTable.option = r.message[i];
+	// 				}
+	// 				cur_frm.refresh_fields("variation_2");
+	// 			}
+	// 		}
+	// 	});
+	// }
 })
 
 frappe.ui.form.on('Attribute Shopee', {

@@ -16,31 +16,42 @@
   "item_name",
   "item_sku",
   "stock",
+  "min_stock",
   "is_fake",
+  "update_image",
+  "category_section",
   "category_parent",
+  "name_category_parent",
   "child_1",
+  "name_category__child_1",
   "child_2",
+  "name_category_child_2",
   "child_3",
+  "name_category_child_3",
   "child_4",
+  "name_category_child_4",
+  "logistic_section",
   "get_logistic",
   "losgistic_table",
   "item_dangerous",
   "pre_order",
   "days",
   "condition",
-  "variation_section_section",
-  "name_variation_1",
-  "variation_1",
-  "name_variation_2",
-  "variation_2",
-  "get_all_variant",
-  "variation_table",
   "specifications_section_section",
   "update_list_brand",
   "id_brand",
   "brand",
   "get_specifications",
   "specifications",
+  "variation_section_section",
+  "name_variation_1",
+  "add_variant_1",
+  "variation_1",
+  "name_variation_2",
+  "add_variant_2",
+  "variation_2",
+  "get_all_variant",
+  "variation_table",
   "add_to_shopee"
  ],
  "fields": [
@@ -58,6 +69,7 @@
   {
    "fieldname": "item_name",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "item_name"
   },
   {
@@ -177,6 +189,7 @@
   {
    "fieldname": "type",
    "fieldtype": "Select",
+   "in_list_view": 1,
    "label": "Type",
    "options": "\nProduct\nTemplate"
   },
@@ -226,12 +239,12 @@
   {
    "fieldname": "update_list_brand",
    "fieldtype": "Button",
-   "hidden": 1,
    "label": "Update List Brand",
-   "options": "update_brand_using_category_id"
+   "options": "enqueue_brand"
   },
   {
    "default": "0",
+   "depends_on": "eval:doc.type==\"Product\"",
    "fieldname": "is_fake",
    "fieldtype": "Check",
    "label": "is_fake"
@@ -239,7 +252,8 @@
   {
    "fieldname": "add_to_shopee",
    "fieldtype": "Button",
-   "label": "Add to Shopee",
+   "hidden": 1,
+   "label": "Testing",
    "options": "test"
   },
   {
@@ -249,14 +263,83 @@
    "options": "get_all_variant"
   },
   {
+   "depends_on": "eval:doc.type==\"Product\"",
    "fieldname": "bobot",
    "fieldtype": "Int",
    "label": "Weight"
+  },
+  {
+   "fetch_from": "category_parent.display_category_name",
+   "fieldname": "name_category_parent",
+   "fieldtype": "Data",
+   "label": "Name Category Parent",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "child_1.display_category_name",
+   "fieldname": "name_category__child_1",
+   "fieldtype": "Data",
+   "label": "Name Category  Child 1",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "child_2.display_category_name",
+   "fieldname": "name_category_child_2",
+   "fieldtype": "Data",
+   "label": "Name Category Child 2",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "child_3.display_category_name",
+   "fieldname": "name_category_child_3",
+   "fieldtype": "Data",
+   "label": "Name Category Child 3",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "child_4.display_category_name",
+   "fieldname": "name_category_child_4",
+   "fieldtype": "Data",
+   "label": "Name Category Child 4",
+   "read_only": 1
+  },
+  {
+   "fieldname": "category_section",
+   "fieldtype": "Section Break",
+   "label": "Category"
+  },
+  {
+   "fieldname": "logistic_section",
+   "fieldtype": "Section Break",
+   "label": "Logistic"
+  },
+  {
+   "depends_on": "eval:doc.type==\"Product\"",
+   "fieldname": "min_stock",
+   "fieldtype": "Int",
+   "label": "min_stock"
+  },
+  {
+   "fieldname": "add_variant_1",
+   "fieldtype": "Button",
+   "label": "Add Variant 1",
+   "options": "get_value_v1"
+  },
+  {
+   "fieldname": "add_variant_2",
+   "fieldtype": "Button",
+   "label": "Add Variant 2"
+  },
+  {
+   "default": "1",
+   "fieldname": "update_image",
+   "fieldtype": "Check",
+   "label": "Update Image"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-09-07 11:56:21.248557",
+ "modified": "2023-01-04 13:57:25.960768",
  "modified_by": "Administrator",
  "module": "Shopee Connector",
  "name": "Item Shopee",
@@ -277,5 +360,7 @@
  ],
  "search_fields": "item_code,item_name",
  "sort_field": "modified",
- "sort_order": "DESC"
+ "sort_order": "DESC",
+ "track_changes": 1,
+ "track_seen": 1
 }

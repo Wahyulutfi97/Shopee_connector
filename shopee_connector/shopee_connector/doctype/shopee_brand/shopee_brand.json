@@ -49,25 +49,12 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-08-15 13:35:47.240006",
+ "modified": "2022-09-14 13:58:21.022942",
  "modified_by": "Administrator",
  "module": "Shopee Connector",
  "name": "Shopee Brand",
  "owner": "Administrator",
- "permissions": [
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "System Manager",
-   "share": 1,
-   "write": 1
-  }
- ],
+ "permissions": [],
  "sort_field": "modified",
  "sort_order": "DESC"
 }

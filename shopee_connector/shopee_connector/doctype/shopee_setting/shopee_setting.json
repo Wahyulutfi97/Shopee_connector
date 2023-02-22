@@ -27,7 +27,8 @@
   "warehouse",
   "price_list",
   "ongkir_account",
-  "paid_to"
+  "paid_to",
+  "shopee_order_status"
  ],
  "fields": [
   {
@@ -102,7 +103,8 @@
   {
    "fieldname": "new_refresh_token",
    "fieldtype": "Data",
-   "label": "new_refresh_token"
+   "label": "new_refresh_token",
+   "read_only": 1
   },
   {
    "default": "0",
@@ -138,8 +140,10 @@
   {
    "fieldname": "ongkir_account",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Ongkir Account",
-   "options": "Account"
+   "options": "Account",
+   "read_only": 1
   },
   {
    "fieldname": "gen_auth",
@@ -152,11 +156,19 @@
    "fieldtype": "Link",
    "label": "paid_to",
    "options": "Account"
+  },
+  {
+   "fieldname": "shopee_order_status",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Shopee Order Status",
+   "options": "\nR",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-09-01 09:42:06.199627",
+ "modified": "2022-10-24 09:51:42.787680",
  "modified_by": "Administrator",
  "module": "Shopee Connector",
  "name": "Shopee Setting",

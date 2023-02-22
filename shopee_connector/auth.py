@@ -90,7 +90,7 @@ class Auth():
 		}
 		response = requests.request("GET",url,headers=headers, data=payload, allow_redirects=False)
 		ret = json.loads(response.text)
-		frappe.msgprint(str(ret))
+		# frappe.msgprint(str(ret['shop_name']))
 		print(ret)
 	
 	@frappe.whitelist()
@@ -109,8 +109,10 @@ class Auth():
 		headers = { "Content-Type": "application/json"}
 		resp = requests.post(url, json=body, headers=headers)
 		ret = json.loads(resp.text)
-		frappe.msgprint(str(ret))
+		frappe.msgprint(url)
+		frappe.msgprint(str(ret)+"123")
 		print(ret)
+		return ret
 
 @frappe.whitelist()
 def gen_token_hourly():

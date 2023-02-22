@@ -1,17 +1,20 @@
 frappe.ui.form.on('Delivery Note', {
 	refresh(frm) {
 		// your code here
-        frappe.call({
-            method: "shopee_connector.api.logistic.cek_status", 
-            args: {
-                name: cur_frm.doc.name,
-                marketplace_id: cur_frm.doc.marketplace_id,
-                marketplace: cur_frm.doc.marketplace
-            },
-            callback: function(r) {
-                // console.log(r)
-            }
-        })
+        if(cur_frm.doc.marketplace == "Shopee"){
+            frappe.call({
+                method: "shopee_connector.api.logistic.cek_status", 
+                args: {
+                    name: cur_frm.doc.name,
+                    marketplace_id: cur_frm.doc.marketplace_id,
+                    marketplace: cur_frm.doc.marketplace
+                },
+                callback: function(r) {
+                    // console.log(r)
+                }
+            })
+        }   
+        
 	},
     update_shipping_order(frm){
         frappe.msgprint('tes')

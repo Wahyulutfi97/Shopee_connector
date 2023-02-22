@@ -16,6 +16,8 @@ from shopee_connector.api.order import make_so
 from shopee_connector.api.order import make_dn
 from shopee_connector.api.payment import get_escrow_detail
 from shopee_connector.api.logistic import get_tracking_number
+from shopee_connector.shopee_connector.doctype.item_shopee.item_shopee import ItemShopee
+from shopee_connector.api.product import add_item_erp_to_shopee, update_item_erp_to_shopee, add_item_variant_erp_to_shopee, update_item_variant_erp_to_shopee, get_item_base_info, get_model_list, update_stock_item_api
 
 
 # @frappe.whitelist(allow_guest=True)
@@ -47,7 +49,7 @@ def order_status_push():
 	elif tmp['code'] == 3:
 		shop = frappe.get_doc("Shopee Setting",{'shop_id':tmp['shop_id']}).name
 		order = get_order_detail(shop,tmp['data']['ordersn'])
-		# frappe.throw(str(order))
+		print(order)
 		doc_t.order_detail = str(order)
 		doc_t.save(ignore_permissions=True)
 		order_sn = tmp['data']['ordersn']
@@ -84,9 +86,9 @@ def order_status_push():
 			tmp_a = []
 			for it in order['response']['order_list'][0]['item_list']:
 				row = doc.append("shopee_order_item",{})
-				frappe.msgprint(str(it['model_id'])+"model_id_123")
+				frappe.msgprint(str(it['model_id'])+"model_id_123aaaa2")
 				if it['model_id'] == 0:
-					item_code = frappe.get_value("Item Shopee",{'item_id':it_id}, "item_code")
+					item_code = frappe.get_value("Item Shopee",{'item_id':it['item_id']}, "item_code")
 					row.item_code = item_code
 				else:
 					item_code_var = frappe.get_value("Table Variation",{'model_id':str(it['model_id'])}, "item_code")
@@ -154,7 +156,6 @@ def order_status_push():
 					frappe.db.commit()
 			elif os == "CANCELLED":
 				cancel_order(order_sn)
-
 		else:
 			doc = frappe.new_doc("Shopee Order")
 			doc.order_sn = order_sn
@@ -177,9 +178,9 @@ def order_status_push():
 			tmp_a = []
 			for it in order['response']['order_list'][0]['item_list']:
 				row = doc.append("shopee_order_item",{})
-				frappe.msgprint(str(it['model_id'])+"model_id_123")
+				frappe.msgprint(str(it['model_id'])+"model_id_123aaaa1")
 				if it['model_id'] == 0:
-					item_code = frappe.get_value("Item Shopee",{'item_id':it_id}, "item_code")
+					item_code = frappe.get_value("Item Shopee",{'item_id':it['item_id']}, "item_code")
 					row.item_code = item_code
 				else:
 					item_code_var = frappe.get_value("Table Variation",{'model_id':str(it['model_id'])}, "item_code")
@@ -269,7 +270,7 @@ def order_status_push2():
 	elif tmp['code'] == 3:
 		shop = frappe.get_doc("Shopee Setting",{'shop_id':tmp['shop_id']}).name
 		order = get_order_detail(shop,tmp['data']['ordersn'])
-		# frappe.throw(str(order))
+		print(order)
 		doc_t.order_detail = str(order)
 		doc_t.save(ignore_permissions=True)
 		order_sn = tmp['data']['ordersn']
@@ -306,9 +307,9 @@ def order_status_push2():
 			tmp_a = []
 			for it in order['response']['order_list'][0]['item_list']:
 				row = doc.append("shopee_order_item",{})
-				frappe.msgprint(str(it['model_id'])+"model_id_123")
+				frappe.msgprint(str(it['model_id'])+"model_id_123aaaa2")
 				if it['model_id'] == 0:
-					item_code = frappe.get_value("Item Shopee",{'item_id':it_id}, "item_code")
+					item_code = frappe.get_value("Item Shopee",{'item_id':it['item_id']}, "item_code")
 					row.item_code = item_code
 				else:
 					item_code_var = frappe.get_value("Table Variation",{'model_id':str(it['model_id'])}, "item_code")
@@ -398,9 +399,9 @@ def order_status_push2():
 			tmp_a = []
 			for it in order['response']['order_list'][0]['item_list']:
 				row = doc.append("shopee_order_item",{})
-				frappe.msgprint(str(it['model_id'])+"model_id_123")
+				frappe.msgprint(str(it['model_id'])+"model_id_123aaaa1")
 				if it['model_id'] == 0:
-					item_code = frappe.get_value("Item Shopee",{'item_id':it_id}, "item_code")
+					item_code = frappe.get_value("Item Shopee",{'item_id':it['item_id']}, "item_code")
 					row.item_code = item_code
 				else:
 					item_code_var = frappe.get_value("Table Variation",{'model_id':str(it['model_id'])}, "item_code")
@@ -519,3 +520,91 @@ def cancel_order(order_sn):
 				doc = frappe.get_doc("Sales Order",i['name'])
 				doc.flags.ignore_permissions = True
 				doc.cancel()
+
+@frappe.whitelist()
+def cek_fake_stock_shopee():
+	data = frappe.db.sql(""" SELECT * from `tabItem Shopee` """,as_dict=1)
+	for i in data:
+		conter = 0
+		if i['type'] == 'Product' and i['item_code']:
+			frappe.msgprint(str(i['name']))
+			doc = frappe.get_doc("Item Shopee",i['name'])
+			tampil = ItemShopee.generate_stock(doc)
+			if tampil <= i['min_stock']:
+				doc.is_fake = 0
+				doc.save()
+
+		if i['type'] == 'Template' and i['item_code']:
+			frappe.msgprint(str(i['name'])+"Template")
+			doc = frappe.get_doc("Item Shopee",i['name'])
+			for i in doc.variation_table:
+				
+				tampil = ItemShopee.generate_stock_variant(doc, i.item_code,i.bobot)
+				if tampil <= i.min_stock:
+					# frappe.msgprint(str(tampil)+'conter = 0')
+					i.is_fake=0
+					i.stock = tampil
+					conter = conter + 1
+			
+			if conter > 0:
+				doc.flags.ignore_permissions = True
+				doc.save()
+
+@frappe.whitelist()
+def calculate_bobot_shopee():
+	data = frappe.db.sql(""" SELECT * from `tabItem Shopee` """,as_dict=1)
+	cal=0
+	for i in data:
+		shopeesetting = frappe.db.sql(""" SELECT * FROM `tabShopee Setting` WHERE name = '{}' """.format(i['shopee_setting']),as_dict=1)
+		for j in shopeesetting:
+			saller_test = j['seller_test']
+			acces_token = j['access_token']
+			partner_id = j['partner_id']
+			key = j['key']
+			shop_id = j['shop_id']
+
+		if i['type'] == 'Product' and i['item_code']:
+			test = get_item_base_info(saller_test,acces_token,partner_id,key,shop_id,i['item_id'])['response']['item_list'][0]['stock_info_v2']['seller_stock'][0]['stock'] if len(get_item_base_info(saller_test,acces_token,partner_id,key,shop_id,i['item_id'])['response']['item_list'][0]['stock_info_v2']) > 1 else 0
+			# frappe.msgprint(i[''])
+			# frappe.msgprint(str(test)+str(i.Stock)+"xxvvv")
+			if test	!= i['stock']:
+				doc = frappe.get_doc('Item Shopee',i['name'])
+				frappe.msgprint(doc.name+'docname')
+				doc.flags.ignore_permissions = True
+				doc.save()
+
+		if i['type'] == 'Template' and i['item_code']:
+			test = get_model_list(saller_test, acces_token, partner_id,key, shop_id, i['item_id'])
+			frappe.msgprint(str(test)+" response get model list")
+			dictModelIdStock = {}
+			for x in test['response']['model']:
+				frappe.msgprint(str(x)+" for get model list xxx")
+				# test = get_item_base_info(saller_test,acces_token,partner_id,key,shop_id,self.item_id)['response']['item_list'][0]['stock_info_v2']['seller_stock'][0]['stock'] if len(get_item_base_info(saller_test,acces_token,partner_id,key,shop_id,self.item_id)['response']['item_list'][0]['stock_info_v2']) > 1 else 0			
+				dictModelIdStock[x['model_id']] = x['stock_info_v2']['seller_stock'][0]['stock'] if len(x['stock_info_v2']) > 1 else 0
+				doc = frappe.get_doc('Item Shopee',i['name'])
+				for v in doc.variation_table:
+					if int(v.model_id) == x['model_id']:
+						frappe.msgprint("zzz123")
+						if v.stock == dictModelIdStock[x['model_id']]:
+							frappe.msgprint("yyy123")
+						else:
+							frappe.msgprint("xxx123")
+							cal = cal+1
+			frappe.msgprint(str(cal)+'cal')
+			if cal > 0:
+				frappe.msgprint(doc.name+"naming")
+				frappe.msgprint("masuk_save")
+				doc.save()
+
+
+	
+	# for i in data:
+	# 	conter = 0
+	# 	if i['type'] == 'Product':
+	# 		tampil = get_stock_price(i['name'])
+	# 		if tampil <= i['min_stock']:
+	# 			doc = frappe.get_doc("Item Shopee",i['name'])
+	# 			doc.is_fake = 0
+	# 			doc.status_item = "LIMITED"
+	# 			doc.flags.ignore_permissions = True
+	# 			doc.save()

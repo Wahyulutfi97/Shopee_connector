@@ -370,19 +370,32 @@ def make_dn(order_sn):
 			doc.marketplace_id = i['name']
 			doc.tracking_no = i['package_number']
 			doc.selling_price_list = frappe.get_value("Shopee Setting",{"name": i['shopee_setting']}, "price_list")
-			get_item = frappe.db.get_list('Shopee Order Item',filters={'parent': i['name'] },fields=['*'])
+			# get_item = frappe.db.get_list('Shopee Order Item',filters={'parent': i['name'] },fields=['*'])
+			get_item = frappe.db.sql(""" SELECT * from `tabSales Order Item` where parent = '{}' """.format(cek_so),as_dict=1)
 			# if get_item:
+			# for j in get_item:
+			# 	row = doc.append('items', {})
+			# 	# row.item_code = j['item_sku']
+			# 	row.item_code = j['item_code']
+			# 	row.conversion_factor = 1
+			# 	row.qty = j['model_quantity_purchased']
+			# 	row.rate = j['model_discounted_price']
+			# 	row.against_sales_order = cek_so
+			# 	row.so_detail = j['name']
+			# 	row.price_list_rate = j['model_discounted_price']
+			# 	row.warehouse = frappe.get_value("Shopee Setting",{"name": i['shopee_setting']}, "warehouse")
+			
 			for j in get_item:
 				row = doc.append('items', {})
 				# row.item_code = j['item_sku']
 				row.item_code = j['item_code']
 				row.conversion_factor = 1
-				row.qty = j['model_quantity_purchased']
-				row.rate = j['model_discounted_price']
+				row.qty = j['qty']
+				row.rate = j['rate']
 				row.against_sales_order = cek_so
-				row.price_list_rate = j['model_discounted_price']
-				row.warehouse = frappe.get_value("Shopee Setting",{"name": i['shopee_setting']}, "warehouse")
-			
+				row.so_detail = j['name']
+				row.price_list_rate = j['price_list_rate']
+				row.warehouse = j['warehouse']
 
 			tax_a = frappe.get_value("Shopee Setting",{"name": i['shopee_setting']}, "ongkir_account")
 			row_tax = doc.append('taxes',{})
@@ -419,20 +432,36 @@ def make_sinv_dn(self,method):
 				doc.marketplace_id = i['name']
 				doc.kurir = i['shipping_carrier']
 				doc.selling_price_list = frappe.get_value("Shopee Setting",{"name": i['shopee_setting']}, "price_list")
-				get_item = frappe.db.get_list('Shopee Order Item',filters={'parent': i['name'] },fields=['*'])
+				# get_item = frappe.db.get_list('Shopee Order Item',filters={'parent': i['name'] },fields=['*'])
+				get_item = frappe.db.sql(""" SELECT * FROM `tabDelivery Note Item` where parent = '{}' """.format(self.name),as_dict=1)
 				# if get_item:
+				# for j in get_item:
+				# 	row = doc.append('items', {})
+				# 	# row.item_code = j['item_sku']
+				# 	row.item_code = j['item_code']
+				# 	row.conversion_factor = 1
+				# 	row.qty = j['model_quantity_purchased']
+				# 	row.rate = j['model_discounted_price']
+				# 	row.sales_order = cek_so
+				# 	row.delivery_note = self.name
+				# 	row.price_list_rate = j['model_discounted_price']
+				# 	row.warehouse = frappe.get_value("Shopee Setting",{"name": i['shopee_setting']}, "warehouse")
+				
 				for j in get_item:
 					row = doc.append('items', {})
 					# row.item_code = j['item_sku']
 					row.item_code = j['item_code']
 					row.conversion_factor = 1
-					row.qty = j['model_quantity_purchased']
-					row.rate = j['model_discounted_price']
+					row.qty = j['qty']
+					row.rate = j['rate']
 					row.sales_order = cek_so
+					row.so_detail = j['so_detail']
 					row.delivery_note = self.name
-					row.price_list_rate = j['model_discounted_price']
-					row.warehouse = frappe.get_value("Shopee Setting",{"name": i['shopee_setting']}, "warehouse")
-				
+					row.dn_detail = j['name']
+					row.serial_no = j['serial_no']
+					row.price_list_rate = j['price_list_rate']
+					row.warehouse = j['warehouse']
+								
 
 				tax_a = frappe.get_value("Shopee Setting",{"name": i['shopee_setting']}, "ongkir_account")
 				row_tax = doc.append('taxes',{})

@@ -9,7 +9,7 @@ from shopee_connector.api.logistic import Logistic
 
 
 class ShopeeSetting(Document):
-	def after_insert(self):
+	def before_insert(self):
 		# pass
 		data = Auth.test_token(self.seller_test,self.shop_id,self.partner_id,self.key,self.code)
 		self.refresh_token = data['refresh_token']
@@ -22,7 +22,8 @@ class ShopeeSetting(Document):
 		# frappe.msgprint(str(data))
 		# Auth.test_token(self.seller_test,self.shop_id,self.partner_id,self.key,self.code)
 		# self.gen_t_rt()
-		Auth.test_toko(self.seller_test,self.shop_id,self.partner_id,self.key,self.access_token)
+		if self.refresh_token:
+			Auth.test_toko(self.seller_test,self.shop_id,self.partner_id,self.key,self.access_token)
 		# Product.get_category(self.seller_test,self.access_token,self.partner_id,self.key,self.shop_id)
 
 	@frappe.whitelist()
@@ -33,17 +34,26 @@ class ShopeeSetting(Document):
 	@frappe.whitelist()
 	def gen_t_rt(self):
 		data = Auth.gen_token_rt(self.seller_test,self.shop_id,self.partner_id,self.key,self.refresh_token)
-		frappe.msgprint(str(data))
-		frappe.msgprint(data['refresh_token'])
-		frappe.msgprint(data['access_token'])
+		# frappe.msgprint(str(data))
+		# frappe.msgprint(data['refresh_token'])
+		# frappe.msgprint(data['access_token'])
 		# self.refresh_token = data['refresh_token']
 		self.access_token = data['access_token']
 		self.new_refresh_token = data['refresh_token']
+		self.flags.ignore_permissions=True
 		self.save()
 
 	@frappe.whitelist()
 	def get_auth_code(self):
-		Auth.test_token(self.seller_test,self.shop_id,self.partner_id,self.key,self.code)
+		data = Auth.test_token(self.seller_test,self.shop_id,self.partner_id,self.key,self.code)
+		self.refresh_token = data['refresh_token']
+		self.access_token = data['access_token']
+		data2 = Auth.gen_token_rt(self.seller_test,self.shop_id,self.partner_id,self.key,self.refresh_token)
+		self.access_token = data['access_token']
+		self.new_refresh_token = data['refresh_token']
+		self.flags.ignore_permissions=True
+		self.save()
+		# frappe.db.commit()
 
 	@frappe.whitelist()
 	def gen_t_c(self):

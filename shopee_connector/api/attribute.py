@@ -28,10 +28,11 @@ class Attribute():
 		}
         response = requests.request("GET",url,headers=headers, data=payload, allow_redirects=False)
         ret = json.loads(response.text)
-        if(ret['error']):
-            frappe.throw('Spesifikasi untuk kategori item tidak ditemukan.')
-        else:
-            frappe.msgprint(str(ret['response']))
+        # frappe.msgprint(str(ret))
+        if(len(ret['response'])==0):            
+            frappe.throw('Specification not found!')
+        else:            
+            # frappe.msgprint(str(ret['response']))
             return (ret['response'])
 
 @frappe.whitelist()
@@ -40,5 +41,5 @@ def get_attribute_list_js(shopee_setting, category_id):
     for i in data:
         listAttribute = Attribute.get_attribute_list(i['seller_test'],i['access_token'],i['partner_id'],i['key'],i['shop_id'],category_id)
     
-    # frappe.msgprint(str(listAttribute['attribute_list']))
+    # frappe.msgprint(str(listAttribute['attribute_list']))    
     return (listAttribute['attribute_list'])

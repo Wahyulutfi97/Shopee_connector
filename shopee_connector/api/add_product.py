@@ -7,6 +7,8 @@ import time
 
 import frappe
 
+# PY UNTUK COBA2 API
+
 @frappe.whitelist()
 def update_brand_using_category_id():
 	idCategory = "101961"
@@ -132,7 +134,7 @@ def get_brand_list(offset):
 	redirect= "https://google.com"
 	base_string = "%s%s%s%s%s"%(partner_id, path, timest,access_token,shop_id )
 	language = "id"
-	category_id = "101955"
+	category_id = "222222222222"
 	sign = hmac.new( partner_key.encode(), base_string.encode(), hashlib.sha256).hexdigest()
 	# url = "https://partner.shopeemobile.com/api/v2/product/get_brand_list?access_token=access_token&category_id=12345&language=zh-hans&offset=0&page_size=10&partner_id=partner_id&shop_id=shop_id&sign=sign&status=1&timestamp=timestamp"
 	url = str(host+path+"?access_token={}&category_id={}&language={}&offset={}&page_size=100&partner_id={}&shop_id={}&sign={}&status=1&timestamp={}".format(access_token,category_id,language,offset,partner_id,shop_id, sign,timest))
@@ -226,7 +228,7 @@ def mediaspace_upload_img_shopee():
     url = str(host+path+"?partner_id={}&sign={}&timestamp={}".format(partner_id, sign,timest))
     payload={}
     files=[
-    ('image',('image',open('demo.solubis.id/public/files/test_gambar.jpg','rb'),'application/octet-stream')) # Replace with actual file path
+    ('image',('image',open('demo.solubis.id/public/files/heli2.png','rb'),'application/octet-stream')) # Replace with actual file path
     ]
     headers = {
 
@@ -261,6 +263,11 @@ def add_item_erp_to_shopee():
 	# add manual category RAM(101955), brand ABRA Therapeutics(1014148), attribute_id RAM (100461) => value_id 4GB (5247), image_id_list (5f4b3c60749a560159826f13a339d41c),
 	payload=json.dumps({
         "original_price":50000,
+		"seller_stock": [
+			{
+			"stock": 123
+			}
+		],
         "description":"RAM TESTING LOGISTIK",
 		"weight":1.1,
         "item_name":"RAM TESTING",
@@ -268,8 +275,7 @@ def add_item_erp_to_shopee():
 			"package_height":1,
 			"package_length":1,
 			"package_width":1
-		},
-        "normal_stock":10,
+		},        
         "logistic_info":[
             {
                 "enabled":True,
@@ -302,7 +308,7 @@ def add_item_erp_to_shopee():
         }
     })
 
-	resp = requests.request("POST",url,headers=headers, data=payload, allow_redirects=False)
+	resp = requests.request("POST",url, data=payload, allow_redirects=False)
 	ret = json.loads(resp.text)
 	frappe.msgprint(str(ret))
 
@@ -443,44 +449,40 @@ def add_item_variant_erp_to_shopee():
 	url = str(host+path+"?access_token={}&partner_id={}&shop_id={}&sign={}&timestamp={}".format(access_token,partner_id,shop_id, sign,timest))
 	# ID ITEM CONTOH : 18339782788 (TESTING RAM)
 	payload=json.dumps({
-	"item_id": 18339782788,
+	"item_id": 19634881218,
 	"model": [
 		{
-		"normal_stock": 892,
-		"original_price": 4760,
+		"normal_stock": 0,
+		"original_price": 12500.0,      
 		"tier_index": [
-			0,
-			0
+			0		
 		]
 		},
 		{
-		"normal_stock": 12,
-		"original_price": 4060,
+		"normal_stock": 0,
+		"original_price": 10000.0,      
 		"tier_index": [
-			1,
-			0
+			1			
 		]
 		}
 	],
 	"tier_variation": [
 		{
-		"name": "Ukuran",
+		"name": "Size",
 		"option_list": [
 			{
-			"option": "XL"
+			"option": "XL",
+			"image":{
+					"image_id":"2f28c24dce4fc4fdef6b5193fa9ece1f"
+				}
 			},
 			{
-			"option": "M"
+			"option": "S",
+			"image":{
+					"image_id":"2f28c24dce4fc4fdef6b5193fa9ece1f"
+				}
 			}
-		]
-		},
-		{
-		"name": "Rasa",
-		"option_list": [
-			{
-			"option": "Manis"
-			}
-		]
+		]		
 		}
 	]
 	})
@@ -530,7 +532,88 @@ def add_item_variant_erp_to_shopee():
 
 	resp = requests.request("POST",url, data=payload, allow_redirects=False)
 	ret = json.loads(resp.text)
-	frappe.msgprint(str(ret['response']['model']))
+	frappe.msgprint(str(ret))
+
+@frappe.whitelist()
+def update_item_variant_erp_to_shopee():
+	shopee = frappe.db.sql(""" SELECT * FROM `tabShopee Setting` WHERE seller_test = 0 LIMIT 1 """,as_dict=1)
+	cek = shopee[0].seller_test
+	access_token = shopee[0].access_token
+	partner_id = shopee[0].partner_id
+	partner_key = shopee[0].key
+	shop_id = shopee[0].shop_id
+	frappe.msgprint(str(shopee[0].seller_test))
+	timest = int(time.time())
+	if cek == 1:
+		host = "https://partner.test-stable.shopeemobile.com"
+	else:
+		host = "https://partner.shopeemobile.com"
+	path = "/api/v2/product/update_tier_variation"
+	redirect= "https://google.com"
+	base_string = "%s%s%s%s%s"%(partner_id, path, timest,access_token,shop_id )
+	sign = hmac.new( partner_key.encode(), base_string.encode(), hashlib.sha256).hexdigest()	
+	url = str(host+path+"?access_token={}&partner_id={}&shop_id={}&sign={}&timestamp={}".format(access_token,partner_id,shop_id, sign,timest))	
+	payload=json.dumps({
+	"item_id": 21042531001,
+    "tier_variation": [
+        {
+            "name": "Size",
+            "option_list": [
+				{
+					"option": "XL"
+				},
+				{
+					"option": "S"
+				}
+            ]
+        },
+		{
+            "name": "Rasa",
+            "option_list": [
+				{
+					"option": "Sambalado"
+				},
+				{
+					"option": "Gurih"
+				}
+            ]
+        }
+    ],
+	"model_list": [
+        {
+            "tier_index": [
+                1,
+				0
+            ],
+            "model_id": 182231775576
+        },
+        {
+            "tier_index": [
+                1,
+				1
+            ],
+            "model_id": 182231775577
+        },
+        {
+            "tier_index": [
+                0,
+				0
+            ],
+            "model_id": 182231775578
+        },
+        {
+            "tier_index": [
+                0,
+				1
+            ],
+            "model_id": 182231775579
+        }
+    ]
+	})
+
+	resp = requests.request("POST",url, data=payload, allow_redirects=False)
+	ret = json.loads(resp.text)
+	frappe.msgprint(str(ret))
 
 @frappe.whitelist()
 def unlist_item_api():
@@ -564,3 +647,86 @@ def unlist_item_api():
 	resp = requests.request("POST",url, data=payload, allow_redirects=False)
 	ret = json.loads(resp.text)
 	frappe.msgprint(str(ret))
+
+@frappe.whitelist()
+def update_stock_item_api():
+	shopee = frappe.db.sql(""" SELECT * FROM `tabShopee Setting` WHERE seller_test = 0 LIMIT 1 """,as_dict=1)
+	cek = shopee[0].seller_test
+	access_token = shopee[0].access_token
+	partner_id = shopee[0].partner_id
+	partner_key = shopee[0].key
+	shop_id = shopee[0].shop_id
+	frappe.msgprint(str(shopee[0].seller_test))
+	timest = int(time.time())
+	language = "id"
+	if cek == 1:
+		host = "https://partner.test-stable.shopeemobile.com"
+	else:
+		host = "https://partner.shopeemobile.com"
+	path = "/api/v2/product/update_stock"
+	redirect= "https://google.com"
+	base_string = "%s%s%s%s%s"%(partner_id, path, timest,access_token,shop_id )
+	sign = hmac.new( partner_key.encode(), base_string.encode(), hashlib.sha256).hexdigest()
+	# url = "https://partner.shopeemobile.com/api/v2/product/update_stock?access_token=access_token&partner_id=partner_id&shop_id=shop_id&sign=sign&timestamp=timestamp"
+	url = str(host+path+"?access_token={}&language={}&partner_id={}&shop_id={}&sign={}&timestamp={}".format(access_token,language,partner_id,shop_id, sign,timest))   
+	payload=json.dumps({
+	"item_id": 1000,
+	"stock_list": [
+		{
+		"model_id": 0,
+		"normal_stock": 0,
+		"seller_stock": [
+			{
+			"location_id": "-",
+			"stock": 0
+			}
+		]
+		}
+	]
+	})
+
+	resp = requests.request("POST",url, data=payload, allow_redirects=False)
+	ret = json.loads(resp.text)
+	frappe.msgprint(str(ret))
+
+@frappe.whitelist()
+def register_brand_api():
+	shopee = frappe.db.sql(""" SELECT * FROM `tabShopee Setting` WHERE seller_test = 0 LIMIT 1 """,as_dict=1)
+	cek = shopee[0].seller_test
+	access_token = shopee[0].access_token
+	partner_id = shopee[0].partner_id
+	partner_key = shopee[0].key
+	shop_id = shopee[0].shop_id
+	frappe.msgprint(str(shopee[0].seller_test))
+	timest = int(time.time())
+	language = "id"
+	if int(cek) > 1:
+		host = "https://partner.test-stable.shopeemobile.com"
+	else:
+		host = "https://partner.shopeemobile.com"
+	path = "/api/v2/product/register_brand"
+	redirect= "https://google.com"
+	base_string = "%s%s%s%s%s"%(partner_id, path, timest,access_token,shop_id )
+	sign = hmac.new( partner_key.encode(), base_string.encode(), hashlib.sha256).hexdigest()	
+	# url = "https://partner.shopeemobile.com/api/v2/product/register_brand?access_token=access_token&partner_id=partner_id&shop_id=shop_id&sign=sign&timestamp=timestamp"
+	url = str(host+path+"?access_token={}&language={}&partner_id={}&shop_id={}&sign={}&timestamp={}".format(access_token,language,partner_id,shop_id, sign,timest))   
+	payload=json.dumps({
+		"original_brand_name" : "Testing brand",
+		"category_list": [
+			100644,
+			101934
+		],
+		"product_image": {
+			"image_id_list": [
+				"-"
+			]
+		},
+		"brand_country": "ID"
+	})
+
+	frappe.msgprint(str(url))
+	frappe.msgprint(str(payload))
+	resp = requests.request("POST",url, data=payload, allow_redirects=False)
+	ret = json.loads(resp.text)
+	frappe.msgprint(str(ret))
+
